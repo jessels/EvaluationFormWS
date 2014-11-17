@@ -10,12 +10,13 @@ public class CriterioDAO {
 	public boolean inserirCriterio(Criterio criterio){
 		try {
 			Connection conn = ConectaMySql.abreConexao();
-			String queryInserir = "INSERT INTO criterio VALUES (null, ?, ?)";
+			String queryInserir = "INSERT INTO criterio VALUES (null, ?, ?, ?)";
 			
 			PreparedStatement ppStm = conn.prepareStatement(queryInserir);
 			
 			ppStm.setInt(1, criterio.getPeso());
 			ppStm.setString(2, criterio.getDescricao());
+			ppStm.setInt(3, criterio.getId_tabela_av());
 						
 			ppStm.executeUpdate();
 			
@@ -30,13 +31,14 @@ public class CriterioDAO {
 		public boolean atualizarCriterio(Criterio criterio){
 			try {
 				Connection conn = ConectaMySql.abreConexao();
-				String queryAtualiza = "UPDATE criterio SET peso = ?, descricao = ? WHERE id_criterio = ?";
+				String queryAtualiza = "UPDATE criterio SET peso = ?, descricao = ?, id_tabela_av = ? WHERE id_criterio = ?";
 				
 				PreparedStatement ppStm = conn.prepareStatement(queryAtualiza);
 				
 				ppStm.setInt(1, criterio.getPeso());
 				ppStm.setString(2, criterio.getDescricao());
-				ppStm.setInt(3, criterio.getId_criterio());
+				ppStm.setInt(3, criterio.getId_tabela_av());
+				ppStm.setInt(4, criterio.getId_criterio());
 				
 				ppStm.executeUpdate();
 				
@@ -84,6 +86,7 @@ public class CriterioDAO {
 				crit.setId_criterio(rSet.getInt(1));
 				crit.setPeso(rSet.getInt(2));
 				crit.setDescricao(rSet.getString(3));
+				crit.setId_tabela_av(rSet.getInt(4));
 				
 				
 				
@@ -116,6 +119,7 @@ public class CriterioDAO {
 				crit.setId_criterio(rSet.getInt(1));
 				crit.setPeso(rSet.getInt(2));
 				crit.setDescricao(rSet.getString(3));
+				crit.setId_tabela_av(rSet.getInt(4));
 				
 			}else{
 				return crit;

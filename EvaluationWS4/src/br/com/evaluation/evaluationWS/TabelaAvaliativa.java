@@ -7,8 +7,8 @@ public class TabelaAvaliativa implements Serializable{
 	
 	private static final long serialVersionUID = -1690584357884220897L;
 	private int id_tabela_av;
-	private int nota_final;
-	private int id_criterio;
+	private String nome;
+	
 	
 	
 	public TabelaAvaliativa(){
@@ -16,11 +16,11 @@ public class TabelaAvaliativa implements Serializable{
 	}
 
 
-	public TabelaAvaliativa(int id_tabela_av, int nota_final, int id_criterio) {
+	public TabelaAvaliativa(int id_tabela_av, String nome) {
 		super();
 		this.id_tabela_av = id_tabela_av;
-		this.nota_final = nota_final;
-		this.id_criterio = id_criterio;
+		this.nome = nome;
+		
 	}
 
 
@@ -34,24 +34,20 @@ public class TabelaAvaliativa implements Serializable{
 	}
 
 
-	public int getNota_final() {
-		return nota_final;
+	public String getNome() {
+		return nome;
 	}
 
 
-	public void setNota_final(int nota_final) {
-		this.nota_final = nota_final;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 
-	public int getId_criterio() {
-		return id_criterio;
+	@Override
+	public String toString() {
+		return nome;
 	}
 
-
-	public void setId_criterio(int id_criterio) {
-		this.id_criterio = id_criterio;
-	}
 	
-
 }

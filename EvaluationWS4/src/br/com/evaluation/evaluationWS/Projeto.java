@@ -9,6 +9,7 @@ public class Projeto implements Serializable{
 	
 	private int id_projeto;
 	private String nome;
+	private int id_evento;
 	
 	
 	public Projeto(){
@@ -20,6 +21,16 @@ public class Projeto implements Serializable{
 		super();
 		this.id_projeto = id_projeto;
 		this.nome = nome;
+	}
+
+
+	public int getId_evento() {
+		return id_evento;
+	}
+
+
+	public void setId_evento(int id_evento) {
+		this.id_evento = id_evento;
 	}
 
 

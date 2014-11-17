@@ -1,6 +1,8 @@
 package br.com.evaluation.evaluationWS;
 
 import java.io.Serializable;
+import java.util.Date;
+
 
 public class Avaliacao implements Serializable{
 	
@@ -10,20 +12,18 @@ public class Avaliacao implements Serializable{
 	private int id_avaliador;
 	private int id_projeto;
 	private int id_tabela_av;
-	private String observacao;
-	private String data_av;
+	private Date data_av;
 	
 	
-	public Avaliacao(){
+	public Avaliacao() {
 		
 	}
-	public Avaliacao(int id_avaliacao, int id_avaliador, int id_projeto, int id_tabela_av, String observacao,
-			String data_av) {
+	public Avaliacao(int id_avaliacao, int id_avaliador, int id_projeto, int id_tabela_av,
+			Date data_av) {
 		this.id_avaliacao = id_avaliacao;
 		this.id_avaliador = id_avaliador;
 		this.id_projeto = id_projeto;
 		this.id_tabela_av = id_tabela_av;
-		this.observacao = observacao;
 		this.data_av = data_av;
 	}
 	public int getId_avaliacao() {
@@ -50,16 +50,11 @@ public class Avaliacao implements Serializable{
 	public void setId_tabela_av(int id_tabela_av) {
 		this.id_tabela_av = id_tabela_av;
 	}
-	public String getObservacao() {
-		return observacao;
-	}
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
-	}
-	public String getData_av() {
+	
+	public Date getData_av() {
 		return data_av;
 	}
-	public void setData_av(String data_av) {
+	public void setData_av(Date data_av) {
 		this.data_av = data_av;
 	}
 	

@@ -11,11 +11,12 @@ public class ProjetoDAO {
 	public boolean inserirProjeto(Projeto projeto){
 		try {
 			Connection conn = ConectaMySql.abreConexao();
-			String queryInserir = "INSERT INTO projeto VALUES (null, ?)";
+			String queryInserir = "INSERT INTO projeto VALUES (null, ?, ?)";
 			
 			PreparedStatement ppStm = conn.prepareStatement(queryInserir);
 			
 			ppStm.setString(1, projeto.getNome());
+			ppStm.setInt(2, projeto.getId_evento());
 			
 			
 			ppStm.executeUpdate();
@@ -31,12 +32,12 @@ public class ProjetoDAO {
 		public boolean atualizarProjeto(Projeto projeto){
 			try {
 				Connection conn = ConectaMySql.abreConexao();
-				String queryAtualiza = "UPDATE projeto SET nome_projeto = ? WHERE id_projeto = ?";
+				String queryAtualiza = "UPDATE projeto SET nome_projeto = ?, id_evento = ? WHERE id_projeto = ?";
 				
 				PreparedStatement ppStm = conn.prepareStatement(queryAtualiza);
 				
 				ppStm.setString(1, projeto.getNome());
-				ppStm.setInt(2, projeto.getId_projeto());
+				ppStm.setInt(2, projeto.getId_evento());
 				
 				ppStm.executeUpdate();
 				

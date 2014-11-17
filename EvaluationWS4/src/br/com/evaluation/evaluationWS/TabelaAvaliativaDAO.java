@@ -3,41 +3,53 @@ package br.com.evaluation.evaluationWS;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class TabelaAvaliativaDAO {
 	
-	public boolean inserirTabelaAvaliativa(TabelaAvaliativa tabelaAvaliativa){
+	public TabelaAvaliativa inserirTabelaAvaliativa(TabelaAvaliativa tabelaAvaliativa){
 		try {
 			Connection conn = ConectaMySql.abreConexao();
-			String queryInserir = "INSERT INTO tabela_avaliativa VALUES (null, ?, ?)";
+			String queryInserir = "INSERT INTO tabela_avaliativa VALUES (null, ?)";
 			
-			PreparedStatement ppStm = conn.prepareStatement(queryInserir);
+			PreparedStatement ppStm = conn.prepareStatement(queryInserir, PreparedStatement.RETURN_GENERATED_KEYS);
 			
-			ppStm.setInt(1, tabelaAvaliativa.getNota_final());
-			ppStm.setInt(2, tabelaAvaliativa.getId_criterio());
+			ppStm.setString(1, tabelaAvaliativa.getNome());
 			
 			
-			ppStm.executeUpdate();
+			int affectedRows = ppStm.executeUpdate();
 			
+			if (affectedRows == 0) {
+	            throw new SQLException("Creating user failed, no rows affected.");
+	        }
+
+	       
+        	ResultSet generatedKeys = ppStm.getGeneratedKeys();
+            if (generatedKeys.next()) {
+            	tabelaAvaliativa.setId_tabela_av((int)generatedKeys.getLong(1));
+            }
+            else {
+                throw new SQLException("Creating user failed, no ID obtained.");
+            }
+	       
 			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}		
-		return true;
+		return tabelaAvaliativa;
 	}
 	
 		public boolean atualizarTabelaAvaliativa(TabelaAvaliativa tabelaAvaliativa){
 			try {
 				Connection conn = ConectaMySql.abreConexao();
-				String queryAtualiza = "UPDATE tabela_avaliativa SET nota_final = ?, id_criterio = ? WHERE id_tabela_av = ?";
+				String queryAtualiza = "UPDATE tabela_avaliativa SET nome_tabela = ? WHERE id_tabela_av = ?";
 				
 				PreparedStatement ppStm = conn.prepareStatement(queryAtualiza);
 				
-				ppStm.setInt(1, tabelaAvaliativa.getNota_final());
-				ppStm.setInt(2, tabelaAvaliativa.getId_criterio());
-				ppStm.setInt(3, tabelaAvaliativa.getId_tabela_av());
+				ppStm.setString(1, tabelaAvaliativa.getNome());
+				ppStm.setInt(2, tabelaAvaliativa.getId_tabela_av());
 				
 				ppStm.executeUpdate();
 				
@@ -83,8 +95,8 @@ public class TabelaAvaliativaDAO {
 				TabelaAvaliativa tba = new TabelaAvaliativa();
 				
 				tba.setId_tabela_av(rSet.getInt(1));
-				tba.setNota_final(rSet.getInt(2));
-				tba.setId_criterio(rSet.getInt(3));
+				tba.setNome(rSet.getString(2));
+				
 				
 				
 				lista.add(tba);
@@ -114,8 +126,7 @@ public class TabelaAvaliativaDAO {
 			if(rSet.next()){
 				tba = new TabelaAvaliativa();
 				tba.setId_tabela_av(rSet.getInt(1));
-				tba.setNota_final(rSet.getInt(2));
-				tba.setId_criterio(rSet.getInt(3));
+				tba.setNome(rSet.getString(2));
 				
 			}else{
 				return tba;
